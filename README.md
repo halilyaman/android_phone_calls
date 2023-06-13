@@ -24,10 +24,24 @@ dependencies:
 import 'package:android_phone_calls/android_phone_calls.dart';
 ```
 
-3. Register the plugin in your Dart code:
+3. Check and request the necessary permissions:
 
 ```dart
-AndroidPhoneCalls.registerPhoneCallListener();
+// Check if the required permissions are granted
+bool hasPermissions = await AndroidPhoneCalls.checkPermissions();
+
+if (hasPermissions) {
+// Permissions are already granted, proceed with your logic
+} else {
+    // Request the required permissions
+    bool requested = await AndroidPhoneCalls.requestPermissions();
+    
+    if (requested) {
+    // Permissions were granted by the user, proceed with your logic
+    } else {
+    // Permissions were not granted by the user, handle accordingly
+    }
+}
 ```
 
 4. Implement the necessary callbacks to handle phone call events:
