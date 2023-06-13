@@ -23,7 +23,11 @@ abstract class AndroidPhoneCallsPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  Future<bool?> requestPermissions() {
+    throw UnimplementedError('requestPermissions() has not been implemented.');
+  }
+
+  Future<bool?> checkPermissions() {
+    throw UnimplementedError('checkPermissions() has not been implemented.');
   }
 }

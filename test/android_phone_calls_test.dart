@@ -9,7 +9,16 @@ class MockAndroidPhoneCallsPlatform
     implements AndroidPhoneCallsPlatform {
 
   @override
-  Future<String?> getPlatformVersion() => Future.value('42');
+  Future<bool?> checkPermissions() {
+    // TODO: implement checkPermissions
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool?> requestPermissions() {
+    // TODO: implement requestPermissions
+    throw UnimplementedError();
+  }
 }
 
 void main() {
@@ -17,13 +26,5 @@ void main() {
 
   test('$MethodChannelAndroidPhoneCalls is the default instance', () {
     expect(initialPlatform, isInstanceOf<MethodChannelAndroidPhoneCalls>());
-  });
-
-  test('getPlatformVersion', () async {
-    AndroidPhoneCalls androidPhoneCallsPlugin = AndroidPhoneCalls();
-    MockAndroidPhoneCallsPlatform fakePlatform = MockAndroidPhoneCallsPlatform();
-    AndroidPhoneCallsPlatform.instance = fakePlatform;
-
-    expect(await androidPhoneCallsPlugin.getPlatformVersion(), '42');
   });
 }

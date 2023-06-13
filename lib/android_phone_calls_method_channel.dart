@@ -10,8 +10,12 @@ class MethodChannelAndroidPhoneCalls extends AndroidPhoneCallsPlatform {
   final methodChannel = const MethodChannel('android_phone_calls');
 
   @override
-  Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
-    return version;
+  Future<bool?> requestPermissions() {
+    return methodChannel.invokeMethod<bool>('requestPermissions');
+  }
+
+  @override
+  Future<bool?> checkPermissions() {
+    return methodChannel.invokeMethod<bool>('checkPermissions');
   }
 }
