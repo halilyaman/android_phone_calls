@@ -13,7 +13,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _androidPhoneCallsPlugin = AndroidPhoneCalls();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ class _MyAppState extends State<MyApp> {
             children: [
               TextButton(
                 onPressed: () {
-                  _androidPhoneCallsPlugin.requestPermissions();
+                  AndroidPhoneCalls.requestPermissions();
                 },
                 child: const Text("Request Permissions"),
               ),
