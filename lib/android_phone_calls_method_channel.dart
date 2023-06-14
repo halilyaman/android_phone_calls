@@ -18,4 +18,16 @@ class MethodChannelAndroidPhoneCalls extends AndroidPhoneCallsPlatform {
   Future<bool?> checkPermissions() {
     return methodChannel.invokeMethod<bool>('checkPermissions');
   }
+
+  @override
+  void addPhoneCallListener({
+    void Function(String?, String?)? onIncomingCall,
+  }) {
+    methodChannel.setMethodCallHandler((call) async {
+      if (call.method == "onIncomingCall") {
+        final arguments = call.arguments as Map<String, dynamic>;
+        onIncomingCall?.call(arguments["phoneNumber"], arguments["callerName"]);
+      }
+    });
+  }
 }

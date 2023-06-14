@@ -16,11 +16,4 @@ class AndroidPhoneCallsWeb extends AndroidPhoneCallsPlatform {
   static void registerWith(Registrar registrar) {
     AndroidPhoneCallsPlatform.instance = AndroidPhoneCallsWeb();
   }
-
-  /// Returns a [String] containing the version of the platform.
-  @override
-  Future<String?> getPlatformVersion() async {
-    final version = html.window.navigator.userAgent;
-    return version;
-  }
 }

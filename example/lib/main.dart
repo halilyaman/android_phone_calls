@@ -15,6 +15,16 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
 
   @override
+  void initState() {
+    super.initState();
+    AndroidPhoneCalls.addPhoneCallListener(
+        onIncomingCall: (phone, name) {
+          print("phone: $phone, name: $name");
+        }
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(

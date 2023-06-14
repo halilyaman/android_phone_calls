@@ -12,4 +12,12 @@ class AndroidPhoneCalls {
     final result = await AndroidPhoneCallsPlatform.instance.checkPermissions();
     return result == true;
   }
+
+  static void addPhoneCallListener({
+    void Function(String? phoneNumber, String? callerName)? onIncomingCall,
+  }) {
+    AndroidPhoneCallsPlatform.instance.addPhoneCallListener(
+      onIncomingCall: onIncomingCall,
+    );
+  }
 }

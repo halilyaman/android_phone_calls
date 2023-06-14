@@ -6,6 +6,7 @@ import android.content.Intent
 import android.provider.ContactsContract
 import android.telephony.TelephonyManager
 import android.util.Log
+import io.flutter.plugin.common.MethodChannel
 
 var isAnswered = false
 
@@ -18,8 +19,11 @@ class PhoneCallHandler : BroadcastReceiver() {
             TelephonyManager.EXTRA_STATE_RINGING -> {
                 // Incoming call
                 Log.d(AndroidPhoneCallsPlugin.TAG, "Incoming call...")
-                 val callerName = getCallerName(context, phoneNumber)
-                 Log.d(AndroidPhoneCallsPlugin.TAG, "Caller Name: $callerName")
+                val callerName = getCallerName(context, phoneNumber)
+                AndroidPhoneCallsPlugin.channel.invokeMethod(
+                    "onIncomingCall",
+                    mapOf("phoneNumber" to phoneNumber, "callerName" to callerName)
+                )
             }
             TelephonyManager.EXTRA_STATE_OFFHOOK -> {
                 // Call answered
@@ -43,16 +47,19 @@ class PhoneCallHandler : BroadcastReceiver() {
         try {
             var callerName: String? = null
             val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
-            val projection = arrayOf(ContactsContract.PhoneLookup.DISPLAY_NAME)
+            val projection = arrayOf(
+                ContactsContract.PhoneLookup.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER
+            )
             val selection = "${ContactsContract.CommonDataKinds.Phone.NUMBER} = ?"
             val selectionArgs = arrayOf(phoneNumber)
-            val cursor = context.contentResolver.query(uri, projection, selection, selectionArgs, null)
-            if (cursor != null && cursor.moveToFirst()) {
-                val columnIndex = cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME)
-                if (columnIndex > -1) {
-                    callerName = cursor.getString(columnIndex)
+            val people = context.contentResolver.query(uri, projection, selection, selectionArgs, null)
+            if (people != null && people.moveToFirst()) {
+                val indexName = people.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME)
+                if (indexName > -1) {
+                    callerName = people.getString(indexName)
                 }
-                cursor.close()
+                people.close()
             }
             return callerName
         } catch(e: Exception) {

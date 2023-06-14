@@ -30,4 +30,11 @@ abstract class AndroidPhoneCallsPlatform extends PlatformInterface {
   Future<bool?> checkPermissions() {
     throw UnimplementedError('checkPermissions() has not been implemented.');
   }
+
+  void addPhoneCallListener({
+    void Function(String?, String?)? onIncomingCall,
+  }) {
+    throw UnimplementedError(
+        'addPhoneCallListener() has not been implemented.');
+  }
 }
