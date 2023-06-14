@@ -12,18 +12,25 @@ object PermissionHelper {
     fun requestPhoneCallPermissions(activity: Activity) {
         ActivityCompat.requestPermissions(
             activity,
-            arrayOf(Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CALL_LOG),
+            arrayOf(
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.READ_CALL_LOG,
+                Manifest.permission.READ_CONTACTS
+            ),
             PERMISSION_REQUEST_CODE
         )
     }
 
-    fun checkPhoneCallPermissions(activity: Activity) : Boolean {
+    fun checkPhoneCallPermissions(activity: Activity): Boolean {
         return ContextCompat.checkSelfPermission(
             activity,
             Manifest.permission.READ_PHONE_STATE
         ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
             activity,
             Manifest.permission.READ_CALL_LOG
+        ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+            activity,
+            Manifest.permission.READ_CONTACTS
         ) == PackageManager.PERMISSION_GRANTED
     }
 }
