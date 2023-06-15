@@ -48,7 +48,7 @@ To use this plugin, follow these steps:
 
     ```dart
     AndroidPhoneCalls.addPhoneCallListener(
-         onIncomingCall: (phoneNumber) {
+         onIncomingCall: (phoneNumber, callerName) {
            // Handle incoming call
          },
          onCallAnswered: () {
