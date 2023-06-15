@@ -14,13 +14,32 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
+  String callState = "No Call";
+
   @override
   void initState() {
     super.initState();
     AndroidPhoneCalls.addPhoneCallListener(
-        onIncomingCall: (phone, name) {
-          print("phone: $phone, name: $name");
-        }
+      onIncomingCall: (phone, name) {
+        setState(() {
+          callState = "phone: $phone, name: $name";
+        });
+      },
+      onCallAnswered: () {
+        setState(() {
+          callState = "Call answered";
+        });
+      },
+      onCallEnded: () {
+        setState(() {
+          callState = "Call ended";
+        });
+      },
+      onMissedCall: () {
+        setState(() {
+          callState = "Missed call";
+        });
+      },
     );
   }
 
@@ -40,6 +59,9 @@ class _MyAppState extends State<MyApp> {
                 },
                 child: const Text("Request Permissions"),
               ),
+              const Spacer(),
+              Text(callState),
+              const Spacer(),
             ],
           ),
         ),

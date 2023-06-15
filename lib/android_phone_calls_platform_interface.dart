@@ -33,6 +33,9 @@ abstract class AndroidPhoneCallsPlatform extends PlatformInterface {
 
   void addPhoneCallListener({
     void Function(String?, String?)? onIncomingCall,
+    void Function()? onCallAnswered,
+    void Function()? onCallEnded,
+    void Function()? onMissedCall,
   }) {
     throw UnimplementedError(
         'addPhoneCallListener() has not been implemented.');

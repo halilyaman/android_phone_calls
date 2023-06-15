@@ -22,11 +22,20 @@ class MethodChannelAndroidPhoneCalls extends AndroidPhoneCallsPlatform {
   @override
   void addPhoneCallListener({
     void Function(String?, String?)? onIncomingCall,
+    void Function()? onCallAnswered,
+    void Function()? onCallEnded,
+    void Function()? onMissedCall,
   }) {
     methodChannel.setMethodCallHandler((call) async {
       if (call.method == "onIncomingCall") {
-        final arguments = call.arguments as Map<String, dynamic>;
+        final arguments = call.arguments;
         onIncomingCall?.call(arguments["phoneNumber"], arguments["callerName"]);
+      } else if (call.method == "onCallAnswered") {
+        onCallAnswered?.call();
+      } else if (call.method == "onCallEnded") {
+        onCallEnded?.call();
+      } else if (call.method == "onMissedCall") {
+        onMissedCall?.call();
       }
     });
   }
