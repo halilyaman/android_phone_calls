@@ -41,6 +41,7 @@ class _MyAppState extends State<MyApp> {
         });
       },
     );
+    AndroidPhoneCalls.getDialerPackageName().then((value) => print('Dialer app: $value'));
   }
 
   @override

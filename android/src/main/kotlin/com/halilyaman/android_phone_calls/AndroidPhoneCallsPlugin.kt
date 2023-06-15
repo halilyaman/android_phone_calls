@@ -1,17 +1,21 @@
 package com.halilyaman.android_phone_calls
 
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
+import android.telecom.TelecomManager
 import android.util.Log
-import androidx.annotation.NonNull
-
+import androidx.annotation.RequiresApi
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+
 
 /** AndroidPhoneCallsPlugin */
 class AndroidPhoneCallsPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
@@ -31,6 +35,7 @@ class AndroidPhoneCallsPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     channel.setMethodCallHandler(this)
   }
 
+  @RequiresApi(Build.VERSION_CODES.M)
   override fun onMethodCall(call: MethodCall, result: Result) {
     when (call.method) {
       "requestPermissions" -> {
@@ -40,6 +45,11 @@ class AndroidPhoneCallsPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
       "checkPermissions" -> {
         val permissionsGranted = PermissionHelper.checkPhoneCallPermissions(activity)
         result.success(permissionsGranted)
+      }
+      "getDialerPackageName" -> {
+        val packageName = getDialerAppPackageName(activity as Context)
+        Log.d(TAG, "Dialer App: $packageName")
+        result.success(packageName)
       }
       else -> {
         result.notImplemented()
@@ -65,5 +75,11 @@ class AndroidPhoneCallsPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
 
   override fun onDetachedFromActivity() {
     TODO("Not yet implemented")
+  }
+
+  @RequiresApi(Build.VERSION_CODES.M)
+  private fun getDialerAppPackageName(context: Context) : String? {
+    val telecomManager = context.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
+    return telecomManager.defaultDialerPackage
   }
 }

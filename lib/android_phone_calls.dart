@@ -26,4 +26,8 @@ class AndroidPhoneCalls {
       onMissedCall: onMissedCall,
     );
   }
+
+  static Future<String?> getDialerPackageName() {
+    return AndroidPhoneCallsPlatform.instance.getDialerPackageName();
+  }
 }

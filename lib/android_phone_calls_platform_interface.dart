@@ -40,4 +40,8 @@ abstract class AndroidPhoneCallsPlatform extends PlatformInterface {
     throw UnimplementedError(
         'addPhoneCallListener() has not been implemented.');
   }
+
+  Future<String?> getDialerPackageName() {
+    throw UnimplementedError('getDialerAppPackages() has not been implemented.');
+  }
 }

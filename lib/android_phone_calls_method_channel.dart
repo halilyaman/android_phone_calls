@@ -39,4 +39,9 @@ class MethodChannelAndroidPhoneCalls extends AndroidPhoneCallsPlatform {
       }
     });
   }
+
+  @override
+  Future<String?> getDialerPackageName() {
+    return methodChannel.invokeMethod<String>('getDialerPackageName');
+  }
 }
