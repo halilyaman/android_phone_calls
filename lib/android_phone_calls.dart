@@ -8,9 +8,8 @@ class AndroidPhoneCalls {
     return AndroidPhoneCallsPlatform.instance.requestPermissions();
   }
 
-  static Future<bool> checkPermissions() async {
-    final result = await AndroidPhoneCallsPlatform.instance.checkPermissions();
-    return result == true;
+  static Future<bool?> checkPermissions() async {
+    return await AndroidPhoneCallsPlatform.instance.checkPermissions();
   }
 
   static void addPhoneCallListener({
